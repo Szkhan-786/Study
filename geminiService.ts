@@ -17,7 +17,9 @@ const SYSTEM_PROMPT = `
 `;
 
 export async function generateStudyNotes(prefs: UserPreferences): Promise<StudyNotes> {
+  // Lazy initialization of AI client using mandatory environment variable
   const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+  
   const userPrompt = `
     Subject: ${prefs.subject}
     Semester: ${prefs.semester}
@@ -89,7 +91,9 @@ export async function generateStudyNotes(prefs: UserPreferences): Promise<StudyN
 }
 
 export async function analyzePharmacyImage(base64Image: string, mimeType: string): Promise<string> {
+  // Lazy initialization of AI client using mandatory environment variable
   const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+  
   const prompt = `
     Analyze this pharmacy academic image. IDENTIFY correctly and PROVIDE academic context.
     
@@ -134,7 +138,9 @@ export async function analyzePharmacyImage(base64Image: string, mimeType: string
 }
 
 export function createPharmacyChatSession(): any {
+  // Lazy initialization of AI client using mandatory environment variable
   const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+  
   return ai.chats.create({
     model: 'gemini-3-pro-preview',
     config: {
