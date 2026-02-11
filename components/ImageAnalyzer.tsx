@@ -6,16 +6,14 @@ import { Button } from './Button';
 
 /**
  * Enhanced utility to transform AI Markdown output into structured academic HTML
- * Strips markdown symbols while preserving hierarchy
+ * Strips all # markdown symbols while preserving hierarchy
  */
 const formatAnalysisText = (text: string) => {
   if (!text) return '';
   
   return text
-    // Handle main sections starting with ### (stripping # symbols)
-    .replace(/^#+\s*(.*$)/gim, '<h3 class="font-black text-emerald-700 dark:text-emerald-400 mt-5 mb-2 text-sm uppercase tracking-wider border-b border-emerald-50 dark:border-emerald-900/30 pb-1">$1</h3>')
-    // Handle specific numbered sections if they aren't headers (e.g., 1. Identification:)
-    .replace(/^(\d+\. .*?:)/gim, '<h3 class="font-bold text-emerald-800 dark:text-emerald-300 mt-4 mb-2 text-sm uppercase tracking-tight">$1</h3>')
+    // Handle main sections starting with # (completely stripping # symbols)
+    .replace(/^#+\s*(.*$)/gim, '<h3 class="font-black text-emerald-700 dark:text-emerald-400 mt-5 mb-2 text-sm uppercase tracking-wider border-b border-emerald-100 dark:border-emerald-900/30 pb-1">$1</h3>')
     // Handle bold keys (**Key:**)
     .replace(/\*\*(.*?)\*\*/g, '<strong class="font-bold text-slate-900 dark:text-white">$1</strong>')
     // Handle bullet points

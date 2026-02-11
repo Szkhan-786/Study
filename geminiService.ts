@@ -2,9 +2,6 @@
 import { GoogleGenAI, Type } from "@google/genai";
 import { UserPreferences, StudyNotes } from "./types";
 
-// Always use process.env.API_KEY directly as per guidelines
-const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
-
 const SYSTEM_PROMPT = `
   You are an expert B.Pharm professor and academic mentor specializing in Indian PCI (Pharmacy Council of India) syllabus.
   Your task is to generate highly structured, exam-oriented study notes for first-year pharmacy students.
@@ -20,6 +17,7 @@ const SYSTEM_PROMPT = `
 `;
 
 export async function generateStudyNotes(prefs: UserPreferences): Promise<StudyNotes> {
+  const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
   const userPrompt = `
     Subject: ${prefs.subject}
     Semester: ${prefs.semester}
@@ -91,17 +89,27 @@ export async function generateStudyNotes(prefs: UserPreferences): Promise<StudyN
 }
 
 export async function analyzePharmacyImage(base64Image: string, mimeType: string): Promise<string> {
+  const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
   const prompt = `
     Analyze this pharmacy academic image. IDENTIFY correctly and PROVIDE academic context.
     
     Structure your response as follows:
-    1. Identification: [Clear name of what is shown]
-    2. Academic Context: [Which B.Pharm subject/semester does this belong to?]
-    3. Exam Focus: [Important points for a 5-mark answer]
-    4. Practical/Safety: [Laboratory precautions or clinical relevance]
-    5. Correction Note (if applicable): [Point out any spelling/factual errors in the image if it's a student's note]
+    # Identification
+    [Clear name of what is shown]
+
+    # Academic Context
+    [Which B.Pharm subject/semester does this belong to?]
+
+    # Exam Focus
+    [Important points for a 5-mark answer]
+
+    # Practical & Safety
+    [Laboratory precautions or clinical relevance]
+
+    # Correction Note (if applicable)
+    [Point out any spelling/factual errors in the image if it's a student's note]
     
-    Use markdown format with **bold** for headings and * bullet points. Be professional and highly detailed.
+    Use markdown format with # for headings (they will be cleaned by UI) and * bullet points. Be professional and highly detailed.
   `;
 
   try {
@@ -126,6 +134,7 @@ export async function analyzePharmacyImage(base64Image: string, mimeType: string
 }
 
 export function createPharmacyChatSession(): any {
+  const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
   return ai.chats.create({
     model: 'gemini-3-pro-preview',
     config: {

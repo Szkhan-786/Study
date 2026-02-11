@@ -16,7 +16,7 @@ const formatMessage = (text: string) => {
   if (!text) return '';
   
   return text
-    // Handle main headers (stripping # symbols)
+    // Handle main headers (completely stripping # symbols)
     .replace(/^#+\s*(.*$)/gim, '<h3 class="font-black text-indigo-700 dark:text-indigo-400 mt-5 mb-2 text-base border-b border-indigo-100 dark:border-indigo-900/40 pb-1 uppercase tracking-tight">$1</h3>')
     // Handle bold text
     .replace(/\*\*(.*?)\*\*/g, '<strong class="font-bold text-slate-900 dark:text-white">$1</strong>')

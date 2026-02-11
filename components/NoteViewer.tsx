@@ -9,22 +9,31 @@ interface NoteViewerProps {
   topic: string;
 }
 
+// Define explicit prop types for the Section component
+interface SectionProps {
+  title: string;
+  icon: React.ElementType;
+  children: React.ReactNode;
+}
+
+// FIX: Defining Section as a separate component outside NoteViewer 
+// ensures React properly recognizes children and prevents unnecessary re-renders.
+const Section: React.FC<SectionProps> = ({ title, icon: Icon, children }) => (
+  <div className="mb-10 bg-white dark:bg-slate-900 p-8 rounded-2xl border border-slate-100 dark:border-slate-800 shadow-sm break-inside-avoid transition-colors duration-300">
+    <div className="flex items-center gap-3 mb-4">
+      <div className="p-2 bg-indigo-50 dark:bg-indigo-900/30 text-indigo-600 dark:text-indigo-400 rounded-lg transition-colors">
+        <Icon className="w-5 h-5" />
+      </div>
+      <h3 className="text-xl font-bold text-slate-800 dark:text-slate-100 uppercase tracking-tight">{title}</h3>
+    </div>
+    <div className="prose prose-slate dark:prose-invert max-w-none text-slate-600 dark:text-slate-400 leading-relaxed">
+      {children}
+    </div>
+  </div>
+);
+
 export const NoteViewer: React.FC<NoteViewerProps> = ({ notes, subject, topic }) => {
   const handlePrint = () => window.print();
-
-  const Section = ({ title, icon: Icon, children }: { title: string; icon: any; children: React.ReactNode }) => (
-    <div className="mb-10 bg-white dark:bg-slate-900 p-8 rounded-2xl border border-slate-100 dark:border-slate-800 shadow-sm break-inside-avoid transition-colors duration-300">
-      <div className="flex items-center gap-3 mb-4">
-        <div className="p-2 bg-indigo-50 dark:bg-indigo-900/30 text-indigo-600 dark:text-indigo-400 rounded-lg transition-colors">
-          <Icon className="w-5 h-5" />
-        </div>
-        <h3 className="text-xl font-bold text-slate-800 dark:text-slate-100 uppercase tracking-tight">{title}</h3>
-      </div>
-      <div className="prose prose-slate dark:prose-invert max-w-none text-slate-600 dark:text-slate-400 leading-relaxed">
-        {children}
-      </div>
-    </div>
-  );
 
   return (
     <div className="max-w-4xl mx-auto py-10 px-4">
