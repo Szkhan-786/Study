@@ -1,0 +1,7 @@
+{
+  "name": "PharmMentor - B.Pharm Study Hub",
+  "description": "A comprehensive study companion for B.Pharm students, providing PCI-syllabus aligned, exam-oriented notes, mnemonics, and practice questions across first-year subjects.",
+  "requestFramePermissions": [
+    "camera"
+  ]
+}
