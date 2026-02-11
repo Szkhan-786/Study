@@ -7,8 +7,8 @@
     <title>PharmMentor - B.Pharm Study Hub</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
-      // Process shim for browser environment
-      window.process = window.process || { env: {} };
+      // Process shim for browser environment - must be defined before modules load
+      window.process = window.process || { env: { API_KEY: "" } };
       
       tailwind.config = {
         darkMode: 'class',
@@ -84,7 +84,6 @@
 </head>
 <body class="bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 antialiased transition-colors duration-300">
     <div id="root"></div>
-    <!-- Bootstrapping the React App -->
     <script type="module" src="index.tsx"></script>
 </body>
 </html>

@@ -16,16 +16,8 @@ const SYSTEM_PROMPT = `
   You must return the response as a valid JSON object matching the provided schema exactly.
 `;
 
-const getApiKey = () => {
-  const key = process.env.API_KEY;
-  if (!key) {
-    console.warn("API Key is missing. Ensure process.env.API_KEY is configured.");
-  }
-  return key || "";
-};
-
 export async function generateStudyNotes(prefs: UserPreferences): Promise<StudyNotes> {
-  const ai = new GoogleGenAI({ apiKey: getApiKey() });
+  const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
   
   const userPrompt = `
     Subject: ${prefs.subject}
@@ -98,7 +90,7 @@ export async function generateStudyNotes(prefs: UserPreferences): Promise<StudyN
 }
 
 export async function analyzePharmacyImage(base64Image: string, mimeType: string): Promise<string> {
-  const ai = new GoogleGenAI({ apiKey: getApiKey() });
+  const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
   
   const prompt = `
     Analyze this pharmacy academic image. IDENTIFY correctly and PROVIDE academic context.
@@ -119,7 +111,7 @@ export async function analyzePharmacyImage(base64Image: string, mimeType: string
     # Correction Note (if applicable)
     [Point out any spelling/factual errors in the image if it's a student's note]
     
-    Use markdown format with # for headings (they will be cleaned by UI) and * bullet points. Be professional and highly detailed.
+    Use markdown format with # for headings and * bullet points. Be professional and highly detailed.
   `;
 
   try {
@@ -144,8 +136,7 @@ export async function analyzePharmacyImage(base64Image: string, mimeType: string
 }
 
 export function createPharmacyChatSession(): any {
-  const ai = new GoogleGenAI({ apiKey: getApiKey() });
-  
+  const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
   return ai.chats.create({
     model: 'gemini-3-pro-preview',
     config: {
